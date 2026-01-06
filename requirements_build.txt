@@ -1,0 +1,6 @@
+pyinstaller
+numpy
+matplotlib
+pydicom
+scipy
+tkinterdnd2
