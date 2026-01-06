@@ -1,0 +1,37 @@
+name: Build Windows Exe
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r src/requirements.txt
+        pip install pyinstaller
+
+    - name: Build with PyInstaller
+      run: |
+        # Use --collect-all to ensure tkinterdnd2 binaries are included
+        pyinstaller --noconfirm --onefile --windowed --name "ImagePerfusion" --collect-all tkinterdnd2 --add-data "src;src" run_gui.py
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: ImagePerfusion-Windows
+        path: dist/ImagePerfusion.exe
