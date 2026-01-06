@@ -31,7 +31,7 @@ jobs:
         pyinstaller --noconfirm --onefile --windowed --name "ImagePerfusion" --collect-all tkinterdnd2 --add-data "src;src" run_gui.py
 
     - name: Upload Artifact
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: ImagePerfusion-Windows
         path: dist/ImagePerfusion.exe
